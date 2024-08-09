@@ -3,20 +3,21 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/udistrital/evaluacion_docente_crud/models"
 	"strconv"
 	"strings"
+
+	"github.com/udistrital/evaluacion_docente_crud/models"
 
 	"github.com/astaxie/beego"
 )
 
-// NoticiaController operations for Noticia
-type NoticiaController struct {
+// FormularioPlantillaRespuestaController operations for FormularioPlantillaRespuesta
+type FormularioPlantillaRespuestaController struct {
 	beego.Controller
 }
 
 // URLMapping ...
-func (c *NoticiaController) URLMapping() {
+func (c *FormularioPlantillaRespuestaController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -26,15 +27,15 @@ func (c *NoticiaController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create Noticia
-// @Param	body		body 	models.Noticia	true		"body for Noticia content"
-// @Success 201 {int} models.Noticia
+// @Description create FormularioPlantillaRespuesta
+// @Param	body		body 	models.FormularioPlantillaRespuesta	true		"body for FormularioPlantillaRespuesta content"
+// @Success 201 {int} models.FormularioPlantillaRespuesta
 // @Failure 403 body is empty
 // @router / [post]
-func (c *NoticiaController) Post() {
-	var v models.Noticia
+func (c *FormularioPlantillaRespuestaController) Post() {
+	var v models.FormularioPlantillaRespuesta
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddNoticia(&v); err == nil {
+		if _, err := models.AddFormulario(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = v
 		} else {
@@ -48,15 +49,15 @@ func (c *NoticiaController) Post() {
 
 // GetOne ...
 // @Title Get One
-// @Description get Noticia by id
+// @Description get FormularioPlantillaRespuesta by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Noticia
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *NoticiaController) GetOne() {
+func (c *FormularioPlantillaRespuestaController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetNoticiaById(id)
+	v, err := models.GetFormularioPlantillaRespuestaById(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -67,17 +68,17 @@ func (c *NoticiaController) GetOne() {
 
 // GetAll ...
 // @Title Get All
-// @Description get Noticia
+// @Description get FormularioPlantillaRespuesta
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.Noticia
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403
 // @router / [get]
-func (c *NoticiaController) GetAll() {
+func (c *FormularioPlantillaRespuestaController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -119,7 +120,7 @@ func (c *NoticiaController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllNoticia(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllFormularioPlantillaRespuesta(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -130,18 +131,18 @@ func (c *NoticiaController) GetAll() {
 
 // Put ...
 // @Title Put
-// @Description update the Noticia
+// @Description update the FormularioPlantillaRespuesta
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.Noticia	true		"body for Noticia content"
-// @Success 200 {object} models.Noticia
+// @Param	body		body 	models.FormularioPlantillaRespuesta	true		"body for FormularioPlantillaRespuesta content"
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *NoticiaController) Put() {
+func (c *FormularioPlantillaRespuestaController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.Noticia{Id: id}
+	v := models.Formulario{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if err := models.UpdateNoticiaById(&v); err == nil {
+		if err := models.UpdateFormularioPlantillaRespuestaById(&v); err == nil {
 			c.Data["json"] = "OK"
 		} else {
 			c.Data["json"] = err.Error()
@@ -154,15 +155,15 @@ func (c *NoticiaController) Put() {
 
 // Delete ...
 // @Title Delete
-// @Description delete the Noticia
+// @Description delete the FormularioPlantillaRespuesta
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *NoticiaController) Delete() {
+func (c *FormularioPlantillaRespuestaController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteNoticia(id); err == nil {
+	if err := models.DeleteFormularioPlantillaRespuesta(id); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

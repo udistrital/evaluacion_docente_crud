@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "evaluacion_docente_crud/routers"
+	_ "udistrital/evaluacion_docente_crud/routers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -16,4 +16,3 @@ func main() {
 	}
 	beego.Run()
 }
-

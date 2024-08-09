@@ -8,8 +8,6 @@
 package routers
 
 import (
-	"github.com/udistrital/evaluacion_docente_crud/controllers"
-
 	"github.com/astaxie/beego"
 )
 
