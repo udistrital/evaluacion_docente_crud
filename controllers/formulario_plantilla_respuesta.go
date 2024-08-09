@@ -1,13 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
-	"errors"
-	"strconv"
-	"strings"
-
-	"github.com/udistrital/evaluacion_docente_crud/models"
-
 	"github.com/astaxie/beego"
 )
 
@@ -33,18 +26,7 @@ func (c *FormularioPlantillaRespuestaController) URLMapping() {
 // @Failure 403 body is empty
 // @router / [post]
 func (c *FormularioPlantillaRespuestaController) Post() {
-	var v models.FormularioPlantillaRespuesta
-	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddFormulario(&v); err == nil {
-			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
-		} else {
-			c.Data["json"] = err.Error()
-		}
-	} else {
-		c.Data["json"] = err.Error()
-	}
-	c.ServeJSON()
+
 }
 
 // GetOne ...
@@ -55,15 +37,7 @@ func (c *FormularioPlantillaRespuestaController) Post() {
 // @Failure 403 :id is empty
 // @router /:id [get]
 func (c *FormularioPlantillaRespuestaController) GetOne() {
-	idStr := c.Ctx.Input.Param(":id")
-	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetFormularioPlantillaRespuestaById(id)
-	if err != nil {
-		c.Data["json"] = err.Error()
-	} else {
-		c.Data["json"] = v
-	}
-	c.ServeJSON()
+
 }
 
 // GetAll ...
@@ -79,54 +53,7 @@ func (c *FormularioPlantillaRespuestaController) GetOne() {
 // @Failure 403
 // @router / [get]
 func (c *FormularioPlantillaRespuestaController) GetAll() {
-	var fields []string
-	var sortby []string
-	var order []string
-	var query = make(map[string]string)
-	var limit int64 = 10
-	var offset int64
 
-	// fields: col1,col2,entity.col3
-	if v := c.GetString("fields"); v != "" {
-		fields = strings.Split(v, ",")
-	}
-	// limit: 10 (default is 10)
-	if v, err := c.GetInt64("limit"); err == nil {
-		limit = v
-	}
-	// offset: 0 (default is 0)
-	if v, err := c.GetInt64("offset"); err == nil {
-		offset = v
-	}
-	// sortby: col1,col2
-	if v := c.GetString("sortby"); v != "" {
-		sortby = strings.Split(v, ",")
-	}
-	// order: desc,asc
-	if v := c.GetString("order"); v != "" {
-		order = strings.Split(v, ",")
-	}
-	// query: k:v,k:v
-	if v := c.GetString("query"); v != "" {
-		for _, cond := range strings.Split(v, ",") {
-			kv := strings.SplitN(cond, ":", 2)
-			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJSON()
-				return
-			}
-			k, v := kv[0], kv[1]
-			query[k] = v
-		}
-	}
-
-	l, err := models.GetAllFormularioPlantillaRespuesta(query, fields, sortby, order, offset, limit)
-	if err != nil {
-		c.Data["json"] = err.Error()
-	} else {
-		c.Data["json"] = l
-	}
-	c.ServeJSON()
 }
 
 // Put ...
@@ -138,19 +65,7 @@ func (c *FormularioPlantillaRespuestaController) GetAll() {
 // @Failure 403 :id is not int
 // @router /:id [put]
 func (c *FormularioPlantillaRespuestaController) Put() {
-	idStr := c.Ctx.Input.Param(":id")
-	id, _ := strconv.Atoi(idStr)
-	v := models.Formulario{Id: id}
-	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if err := models.UpdateFormularioPlantillaRespuestaById(&v); err == nil {
-			c.Data["json"] = "OK"
-		} else {
-			c.Data["json"] = err.Error()
-		}
-	} else {
-		c.Data["json"] = err.Error()
-	}
-	c.ServeJSON()
+
 }
 
 // Delete ...
@@ -161,12 +76,5 @@ func (c *FormularioPlantillaRespuestaController) Put() {
 // @Failure 403 id is empty
 // @router /:id [delete]
 func (c *FormularioPlantillaRespuestaController) Delete() {
-	idStr := c.Ctx.Input.Param(":id")
-	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteFormularioPlantillaRespuesta(id); err == nil {
-		c.Data["json"] = "OK"
-	} else {
-		c.Data["json"] = err.Error()
-	}
-	c.ServeJSON()
+
 }
