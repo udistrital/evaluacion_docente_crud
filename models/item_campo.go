@@ -5,19 +5,18 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
 type ItemCampo struct {
-	Id                int       `orm:"column(id);pk"`
-	ItemId            *Item     `orm:"column(item_id);rel(fk)"`
-	CampoId           *Campo    `orm:"column(campo_id);rel(fk)"`
-	Porcentaje        float64   `orm:"column(porcentaje);null"`
-	Activo            bool      `orm:"column(activo)"`
-	FechaCreacion     time.Time `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion time.Time `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                int     `orm:"column(id);pk"`
+	ItemId            *Item   `orm:"column(item_id);rel(fk)"`
+	CampoId           *Campo  `orm:"column(campo_id);rel(fk)"`
+	Porcentaje        float64 `orm:"column(porcentaje);null"`
+	Activo            bool    `orm:"column(activo)"`
+	FechaCreacion     string  `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion string  `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *ItemCampo) TableName() string {
@@ -52,7 +51,7 @@ func GetItemCampoById(id int) (v *ItemCampo, err error) {
 func GetAllItemCampo(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(ItemCampo))
+	qs := o.QueryTable(new(ItemCampo)).RelatedSel()
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute

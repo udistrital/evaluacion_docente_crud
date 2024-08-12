@@ -5,20 +5,19 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
 type Campo struct {
-	Id                int       `orm:"column(id);pk"`
-	TipoCampoId       int       `orm:"column(tipo_campo_id)"`
-	CampoPadreId      int       `orm:"column(campo_padre_id);null"`
-	Nombre            string    `orm:"column(nombre)"`
-	Valor             int       `orm:"column(valor);null"`
-	Activo            bool      `orm:"column(activo)"`
-	FechaCreacion     time.Time `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion time.Time `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                int    `orm:"column(id);pk"`
+	TipoCampoId       int    `orm:"column(tipo_campo_id)"`
+	CampoPadreId      int    `orm:"column(campo_padre_id);null"`
+	Nombre            string `orm:"column(nombre)"`
+	Valor             int    `orm:"column(valor);null"`
+	Activo            bool   `orm:"column(activo)"`
+	FechaCreacion     string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Campo) TableName() string {

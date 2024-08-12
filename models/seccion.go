@@ -5,18 +5,17 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
 type Seccion struct {
-	Id                int       `orm:"column(id);pk"`
-	Nombre            string    `orm:"column(nombre)"`
-	Orden             int       `orm:"column(orden)"`
-	Activo            bool      `orm:"column(activo)"`
-	FechaCreacion     time.Time `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion time.Time `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                int    `orm:"column(id);pk"`
+	Nombre            string `orm:"column(nombre)"`
+	Orden             int    `orm:"column(orden)"`
+	Activo            bool   `orm:"column(activo)"`
+	FechaCreacion     string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Seccion) TableName() string {

@@ -5,21 +5,20 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
 type Formulario struct {
-	Id                   int       `orm:"column(id);pk"`
-	PeriodoId            int       `orm:"column(periodo_id)"`
-	TerceroId            int       `orm:"column(tercero_id)"`
-	EvaluadoId           int       `orm:"column(evaluado_id)"`
-	EspacioAcademicoId   int       `orm:"column(espacio_academico_id)"`
-	ProyectoCurricularId int       `orm:"column(proyecto_curricular_id)"`
-	Activo               bool      `orm:"column(activo)"`
-	FechaCreacion        time.Time `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion    time.Time `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                   int    `orm:"column(id);pk"`
+	PeriodoId            int    `orm:"column(periodo_id)"`
+	TerceroId            int    `orm:"column(tercero_id)"`
+	EvaluadoId           int    `orm:"column(evaluado_id)"`
+	EspacioAcademicoId   int    `orm:"column(espacio_academico_id)"`
+	ProyectoCurricularId int    `orm:"column(proyecto_curricular_id)"`
+	Activo               bool   `orm:"column(activo)"`
+	FechaCreacion        string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion    string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Formulario) TableName() string {

@@ -5,20 +5,19 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego/orm"
 )
 
 type Plantilla struct {
-	Id                int       `orm:"column(id);pk"`
-	SeccionId         *Seccion  `orm:"column(seccion_id);rel(fk)"`
-	ItemId            *Item     `orm:"column(item_id);rel(fk)"`
-	EstructuraId      string    `orm:"column(estructura_id)"`
-	ProcesoId         int       `orm:"column(proceso_id)"`
-	Activo            bool      `orm:"column(activo)"`
-	FechaCreacion     time.Time `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion time.Time `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                int      `orm:"column(id);pk"`
+	SeccionId         *Seccion `orm:"column(seccion_id);rel(fk)"`
+	ItemId            *Item    `orm:"column(item_id);rel(fk)"`
+	EstructuraId      string   `orm:"column(estructura_id)"`
+	ProcesoId         int      `orm:"column(proceso_id)"`
+	Activo            bool     `orm:"column(activo)"`
+	FechaCreacion     string   `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion string   `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Plantilla) TableName() string {
@@ -53,7 +52,7 @@ func GetPlantillaById(id int) (v *Plantilla, err error) {
 func GetAllPlantilla(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Plantilla))
+	qs := o.QueryTable(new(Plantilla)).RelatedSel()
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
