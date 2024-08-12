@@ -10,7 +10,7 @@ import (
 )
 
 type Formulario struct {
-	Id                   int    `orm:"column(id);pk"`
+	Id                   int    `orm:"column(id);pk;auto"`
 	PeriodoId            int    `orm:"column(periodo_id)"`
 	TerceroId            int    `orm:"column(tercero_id)"`
 	EvaluadoId           int    `orm:"column(evaluado_id)"`

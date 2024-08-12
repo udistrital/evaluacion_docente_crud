@@ -10,7 +10,7 @@ import (
 )
 
 type Plantilla struct {
-	Id                int      `orm:"column(id);pk"`
+	Id                int      `orm:"column(id);pk;auto"`
 	SeccionId         *Seccion `orm:"column(seccion_id);rel(fk)"`
 	ItemId            *Item    `orm:"column(item_id);rel(fk)"`
 	EstructuraId      string   `orm:"column(estructura_id)"`

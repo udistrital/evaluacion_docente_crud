@@ -10,7 +10,7 @@ import (
 )
 
 type Item struct {
-	Id                int    `orm:"column(id);pk"`
+	Id                int    `orm:"column(id);pk;auto"`
 	Orden             int    `orm:"column(orden)"`
 	Nombre            string `orm:"column(nombre)"`
 	Activo            bool   `orm:"column(activo)"`

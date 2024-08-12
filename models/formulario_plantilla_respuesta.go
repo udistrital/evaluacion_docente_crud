@@ -10,7 +10,7 @@ import (
 )
 
 type FormularioPlantillaRespuesta struct {
-	Id                int         `orm:"column(id)"`
+	Id                int         `orm:"column(id);pk;auto"`
 	FormularioId      *Formulario `orm:"column(formulario_id);rel(fk)"`
 	PlantillaId       *Plantilla  `orm:"column(plantilla_id);rel(fk)"`
 	RespuestaId       *Respuesta  `orm:"column(respuesta_id);rel(fk)"`

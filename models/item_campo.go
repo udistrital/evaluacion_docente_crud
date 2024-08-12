@@ -10,7 +10,7 @@ import (
 )
 
 type ItemCampo struct {
-	Id                int     `orm:"column(id);pk"`
+	Id                int     `orm:"column(id);pk;auto"`
 	ItemId            *Item   `orm:"column(item_id);rel(fk)"`
 	CampoId           *Campo  `orm:"column(campo_id);rel(fk)"`
 	Porcentaje        float64 `orm:"column(porcentaje);null"`

@@ -10,7 +10,7 @@ import (
 )
 
 type Seccion struct {
-	Id                int    `orm:"column(id);pk"`
+	Id                int    `orm:"column(id);pk;auto"`
 	Nombre            string `orm:"column(nombre)"`
 	Orden             int    `orm:"column(orden)"`
 	Activo            bool   `orm:"column(activo)"`

@@ -10,7 +10,7 @@ import (
 )
 
 type Campo struct {
-	Id                int    `orm:"column(id);pk"`
+	Id                int    `orm:"column(id);pk;auto"`
 	TipoCampoId       int    `orm:"column(tipo_campo_id)"`
 	CampoPadreId      int    `orm:"column(campo_padre_id);null"`
 	Nombre            string `orm:"column(nombre)"`
