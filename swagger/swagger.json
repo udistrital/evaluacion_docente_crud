@@ -188,6 +188,179 @@
                 }
             }
         },
+        "/formrespuesta/": {
+            "get": {
+                "tags": [
+                    "formrespuesta"
+                ],
+                "description": "get FormularioPlantillaRespuesta",
+                "operationId": "FormularioPlantillaRespuestaController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.FormularioPlantillaRespuesta"
+                        }
+                    },
+                    "403": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "formrespuesta"
+                ],
+                "description": "create FormularioPlantillaRespuesta",
+                "operationId": "FormularioPlantillaRespuestaController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Formulario content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FormularioPlantillaRespuesta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "{int} models.FormularioPlantillaRespuesta"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/formrespuesta/{id}": {
+            "get": {
+                "tags": [
+                    "formrespuesta"
+                ],
+                "description": "get FormularioPlantillaRespuesta by id",
+                "operationId": "FormularioPlantillaRespuestaController.Get One",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.FormularioPlantillaRespuesta"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "formrespuesta"
+                ],
+                "description": "update the FormularioPlantillaRespuesta",
+                "operationId": "FormularioPlantillaRespuestaController.Put",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Formulario content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Formulario"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.FormularioPlantillaRespuesta"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "formrespuesta"
+                ],
+                "description": "delete the FormularioPlantillaRespuesta",
+                "operationId": "FormularioPlantillaRespuestaController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
         "/formulario/": {
             "get": {
                 "tags": [
@@ -1301,6 +1474,34 @@
                 }
             }
         },
+        "models.FormularioPlantillaRespuesta": {
+            "title": "FormularioPlantillaRespuesta",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
+                    "type": "string"
+                },
+                "FormularioId": {
+                    "$ref": "#/definitions/models.Formulario"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "PlantillaId": {
+                    "$ref": "#/definitions/models.Plantilla"
+                },
+                "RespuestaId": {
+                    "$ref": "#/definitions/models.Respuesta"
+                }
+            }
+        },
         "models.Item": {
             "title": "Item",
             "type": "object",
@@ -1388,10 +1589,6 @@
                 }
             }
         },
-        "models.PlantillaRespuesta": {
-            "title": "PlantillaRespuesta",
-            "type": "object"
-        },
         "models.Respuesta": {
             "title": "Respuesta",
             "type": "object",
@@ -1469,6 +1666,10 @@
         {
             "name": "respuesta",
             "description": "RespuestaController operations for Respuesta\n"
+        },
+        {
+            "name": "formrespuesta",
+            "description": "FormularioPlantillaRespuestaController operations for FormularioPlantillaRespuesta\n"
         }
     ]
 }

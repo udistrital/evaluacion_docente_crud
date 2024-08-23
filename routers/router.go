@@ -57,6 +57,12 @@ func init() {
 				&controllers.RespuestaController{},
 			),
 		),
+
+		beego.NSNamespace("/formrespuesta",
+			beego.NSInclude(
+				&controllers.FormularioPlantillaRespuestaController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

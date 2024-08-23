@@ -6,13 +6,7 @@ require (
 	github.com/astaxie/beego v1.12.3
 	github.com/beego/beego v1.12.13
 	github.com/lib/pq v1.10.9
-	github.com/udistrital/auditoria v0.0.0-20240801050554-30b15f390b24
 	github.com/udistrital/utils_oas v0.0.0-20240711190955-138b3a53e7b1
-)
-
-require (
-	github.com/stretchr/testify v1.8.4 // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
 
 require (

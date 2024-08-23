@@ -28,9 +28,9 @@ func (c *FormularioPlantillaRespuestaController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create PlantillaRespuesta
-// @Param	body		body 	models.PlantillaRespuesta	true		"body for Formulario content"
-// @Success 201 {int} models.PlantillaRespuesta
+// @Description create FormularioPlantillaRespuesta
+// @Param	body		body 	models.FormularioPlantillaRespuesta	true		"body for Formulario content"
+// @Success 201 {int} models.FormularioPlantillaRespuesta
 // @Failure 403 body is empty
 // @router / [post]
 func (c *FormularioPlantillaRespuestaController) Post() {
@@ -56,15 +56,15 @@ func (c *FormularioPlantillaRespuestaController) Post() {
 
 // GetOne ...
 // @Title Get One
-// @Description get Formulario by id
+// @Description get FormularioPlantillaRespuesta by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Formulario
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403 :id is empty
 // @router /:id [get]
 func (c *FormularioPlantillaRespuestaController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetFormularioById(id)
+	v, err := models.GetFormularioPlantillaRespuestaById(id)
 	if err != nil {
 		logs.Error(err)
 		c.Data["mesaage"] = "Error service GetOne: The request contains an incorrect parameter or no record exists"
@@ -77,14 +77,14 @@ func (c *FormularioPlantillaRespuestaController) GetOne() {
 
 // GetAll ...
 // @Title Get All
-// @Description get Formulario
+// @Description get FormularioPlantillaRespuesta
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.Formulario
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403
 // @router / [get]
 func (c *FormularioPlantillaRespuestaController) GetAll() {
@@ -129,7 +129,7 @@ func (c *FormularioPlantillaRespuestaController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllFormulario(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllFormularioPlantillaRespuesta(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		logs.Error(err)
 		c.Data["mesaage"] = "Error service GetAll: The request contains an incorrect parameter or no record exists"
@@ -145,19 +145,19 @@ func (c *FormularioPlantillaRespuestaController) GetAll() {
 
 // Put ...
 // @Title Put
-// @Description update the Formulario
+// @Description update the FormularioPlantillaRespuesta
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.Formulario	true		"body for Formulario content"
-// @Success 200 {object} models.Formulario
+// @Success 200 {object} models.FormularioPlantillaRespuesta
 // @Failure 403 :id is not int
 // @router /:id [put]
 func (c *FormularioPlantillaRespuestaController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.Formulario{Id: id}
+	v := models.FormularioPlantillaRespuesta{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		v.FechaModificacion = time_bogota.TiempoBogotaFormato()
-		if err := models.UpdateFormularioById(&v); err == nil {
+		if err := models.UpdateFormularioPlantillaRespuestaById(&v); err == nil {
 			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Update successful", "Data": v}
 		} else {
 			logs.Error(err)
@@ -174,7 +174,7 @@ func (c *FormularioPlantillaRespuestaController) Put() {
 
 // Delete ...
 // @Title Delete
-// @Description delete the Formulario
+// @Description delete the FormularioPlantillaRespuesta
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
@@ -182,7 +182,7 @@ func (c *FormularioPlantillaRespuestaController) Put() {
 func (c *FormularioPlantillaRespuestaController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteFormulario(id); err == nil {
+	if err := models.DeleteFormularioPlantillaRespuesta(id); err == nil {
 		d := map[string]interface{}{"Id": id}
 		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Delete successful", "Data": d}
 	} else {
