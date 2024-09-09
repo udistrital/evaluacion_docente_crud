@@ -20,7 +20,7 @@ type FormularioPlantillaRespuesta struct {
 }
 
 func (t *FormularioPlantillaRespuesta) TableName() string {
-	return "formularioplantillarespuesta"
+	return "formulario_plantilla_respuesta"
 }
 
 func init() {
