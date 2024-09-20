@@ -22,6 +22,26 @@ CREATE TABLE evaluacion_docente.formulario (
 	CONSTRAINT uq_periodo_tercero_evaluado_espacio_proyecto_formulario UNIQUE (tercero_id,periodo_id,espacio_academico_id,proyecto_curricular_id,evaluado_id)
 );
 -- ddl-end --
+COMMENT ON TABLE evaluacion_docente.formulario IS 'Lleva registro de evaluacion presentada por evaluador hacia evaluado en periodo academico particular';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.periodo_id IS 'Id de periodo academico';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.tercero_id IS 'Id de tercero o evaluador';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.evaluado_id IS 'Id de tercero o evaluado';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.espacio_academico_id IS 'Id de espacio academico';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.proyecto_curricular_id IS 'Id de proyecto curricular';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.activo IS 'Flag que indica si el formulario esta activo o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
+-- ddl-end --
 
 -- object: evaluacion_docente.plantilla | type: TABLE --
 -- DROP TABLE IF EXISTS evaluacion_docente.plantilla CASCADE;
@@ -37,6 +57,24 @@ CREATE TABLE evaluacion_docente.plantilla (
 	CONSTRAINT pk_plantilla PRIMARY KEY (id)
 );
 -- ddl-end --
+COMMENT ON TABLE evaluacion_docente.plantilla IS 'Relaciona las secciones con los items o preguntas para un tipo de evaluacion en particular';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.seccion_id IS 'Id de la seccion de la evaluacion';
+
+COMMENT ON COLUMN evaluacion_docente.plantilla.item_id IS 'Id del item o pregunta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.estructura_id IS 'Id de estructura fomulario proveniente de formularios_dinamicos_crud';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.proceso_id IS 'Id referente al proceso proveniente de parametros_crud';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.activo IS 'Flag que indica si la plantilla esta activa o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.plantilla.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
+-- ddl-end --
 
 -- object: evaluacion_docente.seccion | type: TABLE --
 -- DROP TABLE IF EXISTS evaluacion_docente.seccion CASCADE;
@@ -49,6 +87,20 @@ CREATE TABLE evaluacion_docente.seccion (
 	fecha_modificacion timestamp NOT NULL,
 	CONSTRAINT pk_seccion PRIMARY KEY (id)
 );
+-- ddl-end --
+COMMENT ON TABLE evaluacion_docente.seccion IS 'Lista distintas secciones de evaluacion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.nombre IS 'Nombre de la seccion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.orden IS 'Numero para establecer orden de la seccion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.activo IS 'Flag que indica si la seccion esta activa o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.seccion.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
 -- ddl-end --
 
 -- object: evaluacion_docente.item | type: TABLE --
@@ -63,6 +115,20 @@ CREATE TABLE evaluacion_docente.item (
 	CONSTRAINT pk_item PRIMARY KEY (id)
 );
 -- ddl-end --
+COMMENT ON TABLE evaluacion_docente.item IS 'Lista de items o preguntas de evaluacion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.orden IS 'Numero para establecer orden de items';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.nombre IS 'Nombre del item o pregunta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.activo IS 'Flag que indica si el item esta activo o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
+-- ddl-end --
 
 -- object: evaluacion_docente.item_campo | type: TABLE --
 -- DROP TABLE IF EXISTS evaluacion_docente.item_campo CASCADE;
@@ -76,6 +142,22 @@ CREATE TABLE evaluacion_docente.item_campo (
 	fecha_modificacion timestamp NOT NULL,
 	CONSTRAINT pk_item_campo PRIMARY KEY (id)
 );
+-- ddl-end --
+COMMENT ON TABLE evaluacion_docente.item_campo IS 'Relacion entre item o pregunta y campo u opciones de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.item_id IS 'Id de item o pregunta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.campo_id IS 'Id de campo u opcion de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.porcentaje IS 'Valor porcentaje que valora la importancia de la pregunta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.activo IS 'Flag que indica si el item_campo esta activo o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.item_campo.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
 -- ddl-end --
 
 -- object: evaluacion_docente.campo | type: TABLE --
@@ -92,6 +174,24 @@ CREATE TABLE evaluacion_docente.campo (
 	CONSTRAINT pk_campo PRIMARY KEY (id)
 );
 -- ddl-end --
+COMMENT ON TABLE evaluacion_docente.campo IS 'Lista de campos u opciones de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.tipo_campo_id IS 'Id tipo campo proveniente de parametros_crud';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.campo_padre_id IS 'Id de campo padre';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.nombre IS 'Nombre de la opcion de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.valor IS 'Valor de la opcion de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.activo IS 'Flag que indica si el campo esta activo o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.campo.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
+-- ddl-end --
 
 -- object: evaluacion_docente.respuesta | type: TABLE --
 -- DROP TABLE IF EXISTS evaluacion_docente.respuesta CASCADE;
@@ -103,6 +203,18 @@ CREATE TABLE evaluacion_docente.respuesta (
 	fecha_modificacion timestamp NOT NULL,
 	CONSTRAINT pk_respuesta PRIMARY KEY (id)
 );
+-- ddl-end --
+COMMENT ON TABLE evaluacion_docente.respuesta IS 'Registra respuestas a preguntas de formulario evaluacion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.respuesta.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.respuesta.metadata IS 'Campo json para almacenar cualquier tipo de respuesta';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.respuesta.activo IS 'Flag que indica si la respuesta esta activa o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.respuesta.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.respuesta.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
 -- ddl-end --
 
 -- object: evaluacion_docente.formulario_plantilla_respuesta | type: TABLE --
@@ -117,6 +229,22 @@ CREATE TABLE evaluacion_docente.formulario_plantilla_respuesta (
 	fecha_modificacion timestamp NOT NULL,
 	CONSTRAINT pk_formulario_plantilla_respuesta PRIMARY KEY (formulario_id,plantilla_id,respuesta_id,id)
 );
+-- ddl-end --
+COMMENT ON TABLE evaluacion_docente.formulario_plantilla_respuesta IS 'Relaciona el formulario o evaluacion presentada por evaluador con preguntas y respuestas';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.id IS 'Identificador de la tabla';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.formulario_id IS 'Id de formulario o evaluacion';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.plantilla_id IS 'Id de la plantilla o relacion de secciones y preguntas';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.respuesta_id IS 'Id de respuestas a items';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.activo IS 'Flag que indica si la respuesta esta activa o no';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.fecha_creacion IS 'Fecha de creacion del registro';
+-- ddl-end --
+COMMENT ON COLUMN evaluacion_docente.formulario_plantilla_respuesta.fecha_modificacion IS 'Fecha de ultima modificacion del registro';
 -- ddl-end --
 
 -- object: fk_plantilla_seccion | type: CONSTRAINT --
