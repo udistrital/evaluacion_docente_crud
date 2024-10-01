@@ -955,8 +955,7 @@ definitions:
       Activo:
         type: boolean
       EspacioAcademicoId:
-        type: integer
-        format: int64
+        type: string
       EvaluadoId:
         type: integer
         format: int64

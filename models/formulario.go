@@ -14,7 +14,7 @@ type Formulario struct {
 	PeriodoId            int    `orm:"column(periodo_id)"`
 	TerceroId            int    `orm:"column(tercero_id)"`
 	EvaluadoId           int    `orm:"column(evaluado_id)"`
-	EspacioAcademicoId   int    `orm:"column(espacio_academico_id)"`
+	EspacioAcademicoId   string `orm:"column(espacio_academico_id)"`
 	ProyectoCurricularId int    `orm:"column(proyecto_curricular_id)"`
 	Activo               bool   `orm:"column(activo)"`
 	FechaCreacion        string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
