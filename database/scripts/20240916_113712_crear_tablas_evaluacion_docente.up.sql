@@ -13,7 +13,7 @@ CREATE TABLE evaluacion_docente.formulario (
 	periodo_id integer NOT NULL,
 	tercero_id integer NOT NULL,
 	evaluado_id integer NOT NULL,
-	espacio_academico_id integer NOT NULL,
+	espacio_academico_id character(24) NOT NULL,
 	proyecto_curricular_id integer NOT NULL,
 	activo bool NOT NULL,
 	fecha_creacion timestamp NOT NULL,
