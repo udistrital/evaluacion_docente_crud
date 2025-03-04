@@ -9,6 +9,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/beego/beego/logs"
 	"github.com/udistrital/evaluacion_docente_crud/models"
+	"github.com/udistrital/utils_oas/time_bogota"
 )
 
 // ProcesoParametroController operations for ProcesoParametro
@@ -34,15 +35,21 @@ func (c *ProcesoParametroController) URLMapping() {
 // @router / [post]
 func (c *ProcesoParametroController) Post() {
 	var v models.ProcesoParametro
+	v.FechaCreacion = time_bogota.TiempoBogotaFormato()
+	v.FechaModificacion = time_bogota.TiempoBogotaFormato()
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddProcesoParametro(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
+			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "201", "Message": "Registration successful", "Data": v}
 		} else {
-			c.Data["json"] = err.Error()
+			logs.Error(err)
+			c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
@@ -150,12 +157,16 @@ func (c *ProcesoParametroController) Put() {
 	v := models.ProcesoParametro{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateProcesoParametroById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Update successful", "Data": v}
 		} else {
-			c.Data["json"] = err.Error()
+			logs.Error(err)
+			c.Data["message"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
+			c.Abort("400")
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		logs.Error(err)
+		c.Data["message"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
+		c.Abort("400")
 	}
 	c.ServeJSON()
 }
