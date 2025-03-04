@@ -10,7 +10,7 @@ import (
 )
 
 type ProcesoParametro struct {
-	Id                int     `orm:"column(id);pk"`
+	Id                int     `orm:"column(id);pk;auto"`
 	FechaInicio       string  `orm:"column(fecha_inicio);type(timestamp without time zone)"`
 	FechaFin          string  `orm:"column(fecha_fin);type(timestamp without time zone)"`
 	ProcesoId         int16   `orm:"column(proceso_id)"`
