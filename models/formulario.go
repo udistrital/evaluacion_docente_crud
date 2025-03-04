@@ -10,17 +10,18 @@ import (
 )
 
 type Formulario struct {
-	Id                   int    `orm:"column(id);pk;auto"`
-	PeriodoId            int    `orm:"column(periodo_id)"`
-	TerceroId            int    `orm:"column(tercero_id)"`
-	EvaluadoId           int    `orm:"column(evaluado_id)"`
-	EspacioAcademicoId   string `orm:"column(espacio_academico_id)"`
-	ProyectoCurricularId int    `orm:"column(proyecto_curricular_id)"`
-	Grupos               string `orm:"column(grupos);type(json)"`
-	Activo               bool   `orm:"column(activo)"`
-	FechaCreacion        string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion    string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
-	PlantillaProcesoId   int    `orm:"column(plantilla_proceso_id)"`
+	Id                            int    `orm:"column(id);pk;auto"`
+	PeriodoId                     int    `orm:"column(periodo_id)"`
+	EvaluadorId                   string `orm:"column(evaluador_id)"`
+	EvaluadoId                    string `orm:"column(evaluado_id)"`
+	EspacioAcademicoId            string `orm:"column(espacio_academico_id)"`
+	EvaluadorProyectoCurricularId string `orm:"column(evaluador_proyecto_curricular_id)"`
+	EspacioProyectoCurricularId   string `orm:"column(espacio_proyecto_curricular_id)"`
+	ProcesoId                     int    `orm:"column(proceso_id)"`
+	Grupos                        string `orm:"column(grupos);type(json)"`
+	Activo                        bool   `orm:"column(activo)"`
+	FechaCreacion                 string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion             string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Formulario) TableName() string {
@@ -57,7 +58,7 @@ func GetAllFormulario(query map[string]string, fields []string, sortby []string,
 	o := orm.NewOrm()
 
 	// Verificar si el filtro incluye Grupos.id
-	gruposId, hasGruposId := query["Grupos.id"]
+	gruposId, hasGruposId := query["Grupos.id_grupo"]
 
 	// Si el filtro incluye Grupos.id, usar una consulta SQL nativa
 	if hasGruposId {
@@ -65,7 +66,7 @@ func GetAllFormulario(query map[string]string, fields []string, sortby []string,
 		sqlQuery := `
 			SELECT *
 			FROM formulario
-			WHERE grupos->>'id' = ?
+			WHERE grupos->>'id_grupo' = ?
 		`
 
 		// Ejecutar la consulta SQL
