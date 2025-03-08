@@ -63,6 +63,12 @@ func init() {
 				&controllers.FormularioPlantillaRespuestaController{},
 			),
 		),
+
+		beego.NSNamespace("/proceso_parametro",
+			beego.NSInclude(
+				&controllers.ProcesoParametroController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

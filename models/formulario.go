@@ -10,15 +10,18 @@ import (
 )
 
 type Formulario struct {
-	Id                   int    `orm:"column(id);pk;auto"`
-	PeriodoId            int    `orm:"column(periodo_id)"`
-	TerceroId            int    `orm:"column(tercero_id)"`
-	EvaluadoId           int    `orm:"column(evaluado_id)"`
-	EspacioAcademicoId   string `orm:"column(espacio_academico_id)"`
-	ProyectoCurricularId int    `orm:"column(proyecto_curricular_id)"`
-	Activo               bool   `orm:"column(activo)"`
-	FechaCreacion        string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion    string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
+	Id                            int    `orm:"column(id);pk;auto"`
+	PeriodoId                     int    `orm:"column(periodo_id)"`
+	EvaluadorId                   string `orm:"column(evaluador_id)"`
+	EvaluadoId                    string `orm:"column(evaluado_id)"`
+	EspacioAcademicoId            string `orm:"column(espacio_academico_id)"`
+	EvaluadorProyectoCurricularId string `orm:"column(evaluador_proyecto_curricular_id)"`
+	EspacioProyectoCurricularId   string `orm:"column(espacio_proyecto_curricular_id)"`
+	ProcesoId                     int    `orm:"column(proceso_id)"`
+	Grupos                        string `orm:"column(grupos);type(json)"`
+	Activo                        bool   `orm:"column(activo)"`
+	FechaCreacion                 string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion             string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
 func (t *Formulario) TableName() string {
@@ -53,6 +56,44 @@ func GetFormularioById(id int) (v *Formulario, err error) {
 func GetAllFormulario(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
+
+	// Verificar si el filtro incluye Grupos.id
+	gruposId, hasGruposId := query["Grupos.id_grupo"]
+
+	// Si el filtro incluye Grupos.id, usar una consulta SQL nativa
+	if hasGruposId {
+		// Construir la consulta SQL
+		sqlQuery := `
+			SELECT *
+			FROM formulario
+			WHERE grupos->>'id_grupo' = ?
+		`
+
+		// Ejecutar la consulta SQL
+		var formularios []Formulario
+		_, err := o.Raw(sqlQuery, gruposId).QueryRows(&formularios)
+		if err != nil {
+			return nil, err
+		}
+
+		// Convertir los resultados al formato esperado
+		for _, v := range formularios {
+			if len(fields) == 0 {
+				ml = append(ml, v)
+			} else {
+				m := make(map[string]interface{})
+				val := reflect.ValueOf(v)
+				for _, fname := range fields {
+					m[fname] = val.FieldByName(fname).Interface()
+				}
+				ml = append(ml, m)
+			}
+		}
+
+		return ml, nil
+	}
+
+	// Si no se filtra por Grupos.id, usar Beego ORM como antes
 	qs := o.QueryTable(new(Formulario))
 	// query k=v
 	for k, v := range query {
