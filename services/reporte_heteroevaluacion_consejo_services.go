@@ -13,7 +13,7 @@ func GetReporteHeteroevaluacionConsejo(evaluadoId string, periodoId int, proceso
 	query := `
 	WITH promedios AS (
 		SELECT 
-			f.espacio_academico_id AS espacio_academico,
+			f.espacio_academico_id AS espacio_academico_id,
 			AVG((r.metadata ->> 'valor')::int) FILTER (WHERE p.seccion_id = 1 AND i.orden NOT IN (6)) AS promedio_ambito_1,
 			AVG((r.metadata ->> 'valor')::int) FILTER (WHERE p.seccion_id = 2 AND i.orden NOT IN (6)) AS promedio_ambito_2,
 			AVG((r.metadata ->> 'valor')::int) FILTER (WHERE p.seccion_id = 3 AND i.orden NOT IN (12)) AS promedio_ambito_3
@@ -34,7 +34,7 @@ func GetReporteHeteroevaluacionConsejo(evaluadoId string, periodoId int, proceso
 		GROUP BY f.espacio_academico_id
 	)
 	SELECT 
-		espacio_academico,
+		espacio_academico_id,
 		promedio_ambito_1,
 		promedio_ambito_2,
 		promedio_ambito_3,

@@ -18,7 +18,7 @@ func GetReporteCoevaluacionIConsejo(evaluadorId string, periodoId int, procesoId
 
 	query := `
 	WITH preguntas AS (
-		SELECT f.espacio_academico_id AS espacio_academico,
+		SELECT f.espacio_academico_id AS espacio_academico_id,
 			f.grupos ->> 'id_grupo' AS id_grupo,
 			f.grupos ->> 'grupo' AS grupo,
 			MAX(CASE WHEN i.orden = 1 THEN r.metadata ->> 'valor' END) AS respuesta_pregunta_1,
@@ -42,7 +42,7 @@ func GetReporteCoevaluacionIConsejo(evaluadorId string, periodoId int, procesoId
 		GROUP BY f.espacio_academico_id, f.grupos
 	)
 	SELECT 
-		espacio_academico,
+		espacio_academico_id,
 		id_grupo,
 		grupo,
 		respuesta_pregunta_1,
