@@ -809,6 +809,111 @@ paths:
           description: '{string} delete success!'
         "403":
           description: id is empty
+  /reporte_autoevaluacion_ii_tres_consejo/:
+    get:
+      tags:
+      - reporte_autoevaluacion_ii_tres_consejo
+      description: Obtiene el promedio y respuestas abiertas de autoevaluación II del evaluador por espacio académico
+      operationId: ReporteAutoevaluacionIITresConsejoController.Get reporte de autoevaluación II - Consejo
+      parameters:
+      - in: query
+        name: evaluador_id
+        description: ID del evaluador (ej. documento)
+        required: true
+        type: string
+      - in: query
+        name: periodo_id
+        description: ID del periodo académico
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: proceso_id
+        description: ID del proceso
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.ReporteAutoevaluacionIITresConsejo'
+        "400":
+          description: parámetros inválidos
+        "500":
+          description: error al ejecutar la consulta
+  /reporte_coevaluacion_i_consejo/:
+    get:
+      tags:
+      - reporte_coevaluacion_i_consejo
+      description: Obtiene las respuestas abiertas de la coevaluación I por evaluador y grupo
+      operationId: ReporteCoevaluacionIConsejoController.Get reporte de coevaluación I - Consejo
+      parameters:
+      - in: query
+        name: evaluador_id
+        description: ID del evaluador (ej. documento)
+        required: true
+        type: string
+      - in: query
+        name: periodo_id
+        description: ID del periodo académico
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: proceso_id
+        description: ID del proceso
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.ReporteCoevaluacionIConsejo'
+        "400":
+          description: parámetros inválidos
+        "500":
+          description: error al ejecutar la consulta
+  /reporte_heteroevaluacion_consejo/:
+    get:
+      tags:
+      - reporte_heteroevaluacion_consejo
+      description: Obtiene los promedios por ámbito y promedio general de heteroevaluación para un evaluado
+      operationId: ReporteHeteroevaluacionConsejoController.Get reporte de heteroevaluación - Consejo
+      parameters:
+      - in: query
+        name: evaluado_id
+        description: ID del evaluado (ej. documento)
+        required: true
+        type: string
+      - in: query
+        name: periodo_id
+        description: ID del periodo académico
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: proceso_id
+        description: ID del proceso
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.ReporteAutoevaluacionIITresConsejo'
+        "400":
+          description: parámetros inválidos
+        "500":
+          description: error al ejecutar la consulta
   /respuesta/:
     get:
       tags:
@@ -1195,6 +1300,45 @@ definitions:
       ProcesoId:
         type: integer
         format: int32
+  models.ReporteAutoevaluacionIITresConsejo:
+    title: ReporteAutoevaluacionIITresConsejo
+    type: object
+    properties:
+      Documento:
+        type: string
+      Enlace:
+        type: string
+      EspacioAcademicoId:
+        type: integer
+        format: int64
+      Promedio:
+        type: number
+        format: double
+      RespuestaPregunta1:
+        type: string
+      RespuestaPregunta2:
+        type: string
+      RespuestaPregunta3:
+        type: string
+  models.ReporteCoevaluacionIConsejo:
+    title: ReporteCoevaluacionIConsejo
+    type: object
+    properties:
+      Enlace:
+        type: string
+      EspacioAcademico:
+        type: integer
+        format: int64
+      Grupo:
+        type: string
+      IdGrupo:
+        type: string
+      RespuestaPregunta1:
+        type: string
+      RespuestaPregunta2:
+        type: string
+      RespuestaPregunta3:
+        type: string
   models.Respuesta:
     title: Respuesta
     type: object
@@ -1256,3 +1400,12 @@ tags:
 - name: proceso_parametro
   description: |
     ProcesoParametroController operations for ProcesoParametro
+- name: reporte_heteroevaluacion_consejo
+  description: |
+    ReporteHeteroevaluacionConsejoController operations for ReporteHeteroevaluacionConsejo
+- name: reporte_autoevaluacion_ii_tres_consejo
+  description: |
+    ReporteAutoevaluacionIITresConsejoController operations for ReporteAutoevaluacionIITresConsejo
+- name: reporte_coevaluacion_i_consejo
+  description: |
+    ReporteCoevaluacionIConsejoController operations for ReporteCoevaluacionIConsejo

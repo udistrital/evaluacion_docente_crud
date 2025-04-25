@@ -322,6 +322,33 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteAutoevaluacionIITresConsejoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteAutoevaluacionIITresConsejoController"],
+        beego.ControllerComments{
+            Method: "GetOne",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteCoevaluacionIConsejoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteCoevaluacionIConsejoController"],
+        beego.ControllerComments{
+            Method: "GetOne",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteHeteroevaluacionConsejoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:ReporteHeteroevaluacionConsejoController"],
+        beego.ControllerComments{
+            Method: "GetOne",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:RespuestaController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:RespuestaController"],
         beego.ControllerComments{
             Method: "Post",
