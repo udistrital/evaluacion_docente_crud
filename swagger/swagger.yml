@@ -1326,7 +1326,7 @@ definitions:
     properties:
       Enlace:
         type: string
-      EspacioAcademico:
+      EspacioAcademicoId:
         type: integer
         format: int64
       Grupo:
