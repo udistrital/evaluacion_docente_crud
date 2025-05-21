@@ -394,6 +394,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:RespuestaController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:RespuestaController"],
+        beego.ControllerComments{
+            Method: "GetUUIDs",
+            Router: "/document_uuids/:periodo/:evaluado",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:SeccionController"] = append(beego.GlobalControllerRouter["github.com/udistrital/evaluacion_docente_crud/controllers:SeccionController"],
         beego.ControllerComments{
             Method: "Post",

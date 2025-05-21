@@ -8,6 +8,7 @@ import (
 
 	"github.com/beego/beego/logs"
 	"github.com/udistrital/evaluacion_docente_crud/models"
+	"github.com/udistrital/evaluacion_docente_crud/services"
 	"github.com/udistrital/utils_oas/time_bogota"
 
 	"github.com/astaxie/beego"
@@ -190,6 +191,29 @@ func (c *RespuestaController) Delete() {
 		logs.Error(err)
 		c.Data["mesaage"] = "Error service Delete: Request contains incorrect parameter"
 		c.Abort("404")
+	}
+	c.ServeJSON()
+}
+
+// Get ...
+// @Title Get
+// @Description get the UUIDs of the documents
+// @Param	periodo		path 	string	true		"Id del periodo (de parametros)"
+// @Param	evaluado		path 	string	true		"id del evaluado"
+// @Success 200 get UUIDs success!
+// @Failure 404 periodo or evaluado is empty
+// @router /document_uuids/:periodo/:evaluado [get]
+func (c *RespuestaController) GetUUIDs() {
+	perID, _ := strconv.Atoi(c.Ctx.Input.Param(":periodo"))
+	evalID := c.Ctx.Input.Param(":evaluado")
+
+	uuids, err := services.FetchDocumentUUIDs(perID, evalID)
+	if err != nil {
+		logs.Error(err)
+		c.Data["mesaage"] = "Error service GetUUIDs: The request contains an incorrect parameter or no record exists"
+		c.Abort("404")
+	} else {
+		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Request successful", "Data": uuids}
 	}
 	c.ServeJSON()
 }

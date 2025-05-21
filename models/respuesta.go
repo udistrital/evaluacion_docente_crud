@@ -16,6 +16,9 @@ type Respuesta struct {
 	FechaCreacion     string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
 	FechaModificacion string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
+type documentUUID struct {
+	DocumentUUID string `orm:"column(document_uuid)"`
+}
 
 func (t *Respuesta) TableName() string {
 	return "respuesta"
@@ -153,4 +156,28 @@ func DeleteRespuesta(id int) (err error) {
 		}
 	}
 	return
+}
+
+func GetDocumentUUIDs(periodoID int, evaluadoID string) ([]string, error) {
+	o := orm.NewOrm()
+	uuidRegex := "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$"
+	sql := `
+    SELECT r.metadata::json ->> 'valor' AS document_uuid
+      FROM formulario f
+      LEFT JOIN formulario_plantilla_respuesta fpr ON f.id = fpr.formulario_id
+      LEFT JOIN respuesta r                       ON r.id = fpr.respuesta_id
+     WHERE f.periodo_id = $1
+       AND f.evaluado_id = $2
+       AND (r.metadata::json ->> 'valor') ~ $3
+    `
+	var rows []documentUUID
+	_, err := o.Raw(sql, periodoID, evaluadoID, uuidRegex).QueryRows(&rows)
+	if err != nil {
+		return nil, err
+	}
+	uuids := make([]string, len(rows))
+	for i, r := range rows {
+		uuids[i] = r.DocumentUUID
+	}
+	return uuids, nil
 }
