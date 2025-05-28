@@ -1028,6 +1028,28 @@ paths:
           description: '{string} delete success!'
         "403":
           description: id is empty
+  /respuesta/document_uuids/{periodo}/{evaluado}:
+    get:
+      tags:
+      - respuesta
+      description: get the UUIDs of the documents
+      operationId: RespuestaController.Get
+      parameters:
+      - in: path
+        name: periodo
+        description: Id del periodo (de parametros)
+        required: true
+        type: string
+      - in: path
+        name: evaluado
+        description: id del evaluado
+        required: true
+        type: string
+      responses:
+        "200":
+          description: get UUIDs success!
+        "404":
+          description: periodo or evaluado is empty
   /seccion/:
     get:
       tags:
