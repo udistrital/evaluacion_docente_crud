@@ -54,4 +54,3 @@ func (c *ReporteAutoevaluacionIITresConsejoController) GetOne() {
 	c.Data["json"] = resultado
 	c.ServeJSON()
 }
-

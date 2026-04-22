@@ -13,7 +13,7 @@ func GetReporteCoevaluacionIConsejo(evaluadorId string, periodoId int, procesoId
 	/*err = o.Begin()
 
 	if err != nil {
-		return 
+		return
 	}*/
 
 	query := `
