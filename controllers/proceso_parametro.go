@@ -6,21 +6,19 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/astaxie/beego"
 	"github.com/beego/beego/logs"
 	"github.com/udistrital/evaluacion_docente_crud/models"
-	"github.com/udistrital/evaluacion_docente_crud/services"
 	"github.com/udistrital/utils_oas/time_bogota"
-
-	"github.com/astaxie/beego"
 )
 
-// RespuestaController operations for Respuesta
-type RespuestaController struct {
+// ProcesoParametroController operations for ProcesoParametro
+type ProcesoParametroController struct {
 	beego.Controller
 }
 
 // URLMapping ...
-func (c *RespuestaController) URLMapping() {
+func (c *ProcesoParametroController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -30,27 +28,27 @@ func (c *RespuestaController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create Respuesta
-// @Param	body		body 	models.Respuesta	true		"body for Respuesta content"
-// @Success 201 {int} models.Respuesta
+// @Description create ProcesoParametro
+// @Param	body		body 	models.ProcesoParametro	true		"body for ProcesoParametro content"
+// @Success 201 {int} models.ProcesoParametro
 // @Failure 403 body is empty
 // @router / [post]
-func (c *RespuestaController) Post() {
-	var v models.Respuesta
+func (c *ProcesoParametroController) Post() {
+	var v models.ProcesoParametro
 	v.FechaCreacion = time_bogota.TiempoBogotaFormato()
 	v.FechaModificacion = time_bogota.TiempoBogotaFormato()
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddRespuesta(&v); err == nil {
+		if _, err := models.AddProcesoParametro(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "201", "Message": "Registration successful", "Data": v}
 		} else {
 			logs.Error(err)
-			c.Data["mesaage"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+			c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
 			c.Abort("400")
 		}
 	} else {
 		logs.Error(err)
-		c.Data["mesaage"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
+		c.Data["message"] = "Error service POST: The request contains an incorrect data type or an invalid parameter"
 		c.Abort("400")
 	}
 	c.ServeJSON()
@@ -58,18 +56,18 @@ func (c *RespuestaController) Post() {
 
 // GetOne ...
 // @Title Get One
-// @Description get Respuesta by id
+// @Description get ProcesoParametro by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Respuesta
+// @Success 200 {object} models.ProcesoParametro
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *RespuestaController) GetOne() {
+func (c *ProcesoParametroController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetRespuestaById(id)
+	v, err := models.GetProcesoParametroById(id)
 	if err != nil {
 		logs.Error(err)
-		c.Data["mesaage"] = "Error service GetOne: The request contains an incorrect parameter or no record exists"
+		c.Data["message"] = "Error service GetOne: The request contains an incorrect parameter or no record exists"
 		c.Abort("404")
 	} else {
 		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Request successful", "Data": v}
@@ -79,17 +77,17 @@ func (c *RespuestaController) GetOne() {
 
 // GetAll ...
 // @Title Get All
-// @Description get Respuesta
+// @Description get ProcesoParametro
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.Respuesta
+// @Success 200 {object} models.ProcesoParametro
 // @Failure 403
 // @router / [get]
-func (c *RespuestaController) GetAll() {
+func (c *ProcesoParametroController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -131,10 +129,10 @@ func (c *RespuestaController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllRespuesta(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllProcesoParametro(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		logs.Error(err)
-		c.Data["mesaage"] = "Error service GetAll: The request contains an incorrect parameter or no record exists"
+		c.Data["message"] = "Error service GetAll: The request contains an incorrect parameter or no record exists"
 		c.Abort("404")
 	} else {
 		if l == nil {
@@ -147,28 +145,27 @@ func (c *RespuestaController) GetAll() {
 
 // Put ...
 // @Title Put
-// @Description update the Respuesta
+// @Description update the ProcesoParametro
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.Respuesta	true		"body for Respuesta content"
-// @Success 200 {object} models.Respuesta
+// @Param	body		body 	models.ProcesoParametro	true		"body for ProcesoParametro content"
+// @Success 200 {object} models.ProcesoParametro
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *RespuestaController) Put() {
+func (c *ProcesoParametroController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.Respuesta{Id: id}
+	v := models.ProcesoParametro{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		v.FechaModificacion = time_bogota.TiempoBogotaFormato()
-		if err := models.UpdateRespuestaById(&v); err == nil {
+		if err := models.UpdateProcesoParametroById(&v); err == nil {
 			c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Update successful", "Data": v}
 		} else {
 			logs.Error(err)
-			c.Data["mesaage"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
+			c.Data["message"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
 			c.Abort("400")
 		}
 	} else {
 		logs.Error(err)
-		c.Data["mesaage"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
+		c.Data["message"] = "Error service Put: The request contains an incorrect data type or an invalid parameter"
 		c.Abort("400")
 	}
 	c.ServeJSON()
@@ -176,44 +173,18 @@ func (c *RespuestaController) Put() {
 
 // Delete ...
 // @Title Delete
-// @Description delete the Respuesta
+// @Description delete the ProcesoParametro
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *RespuestaController) Delete() {
+func (c *ProcesoParametroController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteRespuesta(id); err == nil {
-		d := map[string]interface{}{"Id": id}
-		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Delete successful", "Data": d}
+	if err := models.DeleteProcesoParametro(id); err == nil {
+		c.Data["json"] = "OK"
 	} else {
-		logs.Error(err)
-		c.Data["mesaage"] = "Error service Delete: Request contains incorrect parameter"
-		c.Abort("404")
-	}
-	c.ServeJSON()
-}
-
-// Get ...
-// @Title Get
-// @Description get the UUIDs of the documents
-// @Param	periodo		path 	string	true		"Id del periodo (de parametros)"
-// @Param	evaluado		path 	string	true		"id del evaluado"
-// @Success 200 get UUIDs success!
-// @Failure 404 periodo or evaluado is empty
-// @router /document_uuids/:periodo/:evaluado [get]
-func (c *RespuestaController) GetUUIDs() {
-	perID, _ := strconv.Atoi(c.Ctx.Input.Param(":periodo"))
-	evalID := c.Ctx.Input.Param(":evaluado")
-
-	uuids, err := services.FetchDocumentUUIDs(perID, evalID)
-	if err != nil {
-		logs.Error(err)
-		c.Data["mesaage"] = "Error service GetUUIDs: The request contains an incorrect parameter or no record exists"
-		c.Abort("404")
-	} else {
-		c.Data["json"] = map[string]interface{}{"Success": true, "Status": "200", "Message": "Request successful", "Data": uuids}
+		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
 }

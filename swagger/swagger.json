@@ -1053,6 +1053,332 @@
                 }
             }
         },
+        "/proceso_parametro/": {
+            "get": {
+                "tags": [
+                    "proceso_parametro"
+                ],
+                "description": "get ProcesoParametro",
+                "operationId": "ProcesoParametroController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "fields",
+                        "description": "Fields returned. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sortby",
+                        "description": "Sorted-by fields. e.g. col1,col2 ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProcesoParametro"
+                        }
+                    },
+                    "403": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "proceso_parametro"
+                ],
+                "description": "create ProcesoParametro",
+                "operationId": "ProcesoParametroController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for ProcesoParametro content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProcesoParametro"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "{int} models.ProcesoParametro"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/proceso_parametro/{id}": {
+            "get": {
+                "tags": [
+                    "proceso_parametro"
+                ],
+                "description": "get ProcesoParametro by id",
+                "operationId": "ProcesoParametroController.Get One",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProcesoParametro"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "proceso_parametro"
+                ],
+                "description": "update the ProcesoParametro",
+                "operationId": "ProcesoParametroController.Put",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for ProcesoParametro content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProcesoParametro"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProcesoParametro"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "proceso_parametro"
+                ],
+                "description": "delete the ProcesoParametro",
+                "operationId": "ProcesoParametroController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
+        "/reporte_autoevaluacion_ii_tres_consejo/": {
+            "get": {
+                "tags": [
+                    "reporte_autoevaluacion_ii_tres_consejo"
+                ],
+                "description": "Obtiene el promedio y respuestas abiertas de autoevaluación II del evaluador por espacio académico",
+                "operationId": "ReporteAutoevaluacionIITresConsejoController.Get reporte de autoevaluación II - Consejo",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "evaluador_id",
+                        "description": "ID del evaluador (ej. documento)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "periodo_id",
+                        "description": "ID del periodo académico",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "proceso_id",
+                        "description": "ID del proceso",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ReporteAutoevaluacionIITresConsejo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "parámetros inválidos"
+                    },
+                    "500": {
+                        "description": "error al ejecutar la consulta"
+                    }
+                }
+            }
+        },
+        "/reporte_coevaluacion_i_consejo/": {
+            "get": {
+                "tags": [
+                    "reporte_coevaluacion_i_consejo"
+                ],
+                "description": "Obtiene las respuestas abiertas de la coevaluación I por evaluador y grupo",
+                "operationId": "ReporteCoevaluacionIConsejoController.Get reporte de coevaluación I - Consejo",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "evaluador_id",
+                        "description": "ID del evaluador (ej. documento)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "periodo_id",
+                        "description": "ID del periodo académico",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "proceso_id",
+                        "description": "ID del proceso",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ReporteCoevaluacionIConsejo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "parámetros inválidos"
+                    },
+                    "500": {
+                        "description": "error al ejecutar la consulta"
+                    }
+                }
+            }
+        },
+        "/reporte_heteroevaluacion_consejo/": {
+            "get": {
+                "tags": [
+                    "reporte_heteroevaluacion_consejo"
+                ],
+                "description": "Obtiene los promedios por ámbito y promedio general de heteroevaluación para un evaluado",
+                "operationId": "ReporteHeteroevaluacionConsejoController.Get reporte de heteroevaluación - Consejo",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "evaluado_id",
+                        "description": "ID del evaluado (ej. documento)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "periodo_id",
+                        "description": "ID del periodo académico",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "proceso_id",
+                        "description": "ID del proceso",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ReporteAutoevaluacionIITresConsejo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "parámetros inválidos"
+                    },
+                    "500": {
+                        "description": "error al ejecutar la consulta"
+                    }
+                }
+            }
+        },
         "/respuesta/": {
             "get": {
                 "tags": [
@@ -1133,6 +1459,39 @@
                     },
                     "403": {
                         "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/respuesta/document_uuids/{periodo}/{evaluado}": {
+            "get": {
+                "tags": [
+                    "respuesta"
+                ],
+                "description": "get the UUIDs of the documents",
+                "operationId": "RespuestaController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "periodo",
+                        "description": "Id del periodo (de parametros)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "evaluado",
+                        "description": "id del evaluado",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get UUIDs success!"
+                    },
+                    "404": {
+                        "description": "periodo or evaluado is empty"
                     }
                 }
             }
@@ -1445,14 +1804,25 @@
                 "EspacioAcademicoId": {
                     "type": "string"
                 },
+                "EspacioProyectoCurricularId": {
+                    "type": "string"
+                },
                 "EvaluadoId": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
+                },
+                "EvaluadorId": {
+                    "type": "string"
+                },
+                "EvaluadorProyectoCurricularId": {
+                    "type": "string"
                 },
                 "FechaCreacion": {
                     "type": "string"
                 },
                 "FechaModificacion": {
+                    "type": "string"
+                },
+                "Grupos": {
                     "type": "string"
                 },
                 "Id": {
@@ -1463,11 +1833,7 @@
                     "type": "integer",
                     "format": "int64"
                 },
-                "ProyectoCurricularId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "TerceroId": {
+                "ProcesoId": {
                     "type": "integer",
                     "format": "int64"
                 }
@@ -1588,6 +1954,96 @@
                 }
             }
         },
+        "models.ProcesoParametro": {
+            "title": "ProcesoParametro",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaFin": {
+                    "type": "string"
+                },
+                "FechaInicio": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "PorcentajeProceso": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ProcesoId": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "models.ReporteAutoevaluacionIITresConsejo": {
+            "title": "ReporteAutoevaluacionIITresConsejo",
+            "type": "object",
+            "properties": {
+                "Documento": {
+                    "type": "string"
+                },
+                "Enlace": {
+                    "type": "string"
+                },
+                "EspacioAcademicoId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Promedio": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "RespuestaPregunta1": {
+                    "type": "string"
+                },
+                "RespuestaPregunta2": {
+                    "type": "string"
+                },
+                "RespuestaPregunta3": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ReporteCoevaluacionIConsejo": {
+            "title": "ReporteCoevaluacionIConsejo",
+            "type": "object",
+            "properties": {
+                "Enlace": {
+                    "type": "string"
+                },
+                "EspacioAcademicoId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Grupo": {
+                    "type": "string"
+                },
+                "IdGrupo": {
+                    "type": "string"
+                },
+                "RespuestaPregunta1": {
+                    "type": "string"
+                },
+                "RespuestaPregunta2": {
+                    "type": "string"
+                },
+                "RespuestaPregunta3": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Respuesta": {
             "title": "Respuesta",
             "type": "object",
@@ -1669,6 +2125,22 @@
         {
             "name": "formrespuesta",
             "description": "FormularioPlantillaRespuestaController operations for FormularioPlantillaRespuesta\n"
+        },
+        {
+            "name": "proceso_parametro",
+            "description": "ProcesoParametroController operations for ProcesoParametro\n"
+        },
+        {
+            "name": "reporte_heteroevaluacion_consejo",
+            "description": "ReporteHeteroevaluacionConsejoController operations for ReporteHeteroevaluacionConsejo\n"
+        },
+        {
+            "name": "reporte_autoevaluacion_ii_tres_consejo",
+            "description": "ReporteAutoevaluacionIITresConsejoController operations for ReporteAutoevaluacionIITresConsejo\n"
+        },
+        {
+            "name": "reporte_coevaluacion_i_consejo",
+            "description": "ReporteCoevaluacionIConsejoController operations for ReporteCoevaluacionIConsejo\n"
         }
     ]
 }

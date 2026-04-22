@@ -63,6 +63,30 @@ func init() {
 				&controllers.FormularioPlantillaRespuestaController{},
 			),
 		),
+
+		beego.NSNamespace("/proceso_parametro",
+			beego.NSInclude(
+				&controllers.ProcesoParametroController{},
+			),
+		),
+
+		beego.NSNamespace("/reporte_heteroevaluacion_consejo",
+			beego.NSInclude(
+				&controllers.ReporteHeteroevaluacionConsejoController{},
+			),
+		),
+
+		beego.NSNamespace("/reporte_autoevaluacion_ii_tres_consejo",
+			beego.NSInclude(
+				&controllers.ReporteAutoevaluacionIITresConsejoController{},
+			),
+		),
+
+		beego.NSNamespace("/reporte_coevaluacion_i_consejo",
+			beego.NSInclude(
+				&controllers.ReporteCoevaluacionIConsejoController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

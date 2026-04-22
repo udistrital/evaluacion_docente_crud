@@ -9,59 +9,56 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type Respuesta struct {
-	Id                int    `orm:"column(id);pk;auto"`
-	Metadata          string `orm:"column(metadata);type(json)"`
-	Activo            bool   `orm:"column(activo)"`
-	FechaCreacion     string `orm:"column(fecha_creacion);type(timestamp without time zone)"`
-	FechaModificacion string `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
-}
-type documentUUID struct {
-	DocumentUUID string `orm:"column(document_uuid)"`
+type ProcesoParametro struct {
+	Id                int     `orm:"column(id);pk;auto"`
+	FechaInicio       string  `orm:"column(fecha_inicio);type(timestamp without time zone)"`
+	FechaFin          string  `orm:"column(fecha_fin);type(timestamp without time zone)"`
+	ProcesoId         int16   `orm:"column(proceso_id)"`
+	PorcentajeProceso float64 `orm:"column(porcentaje_proceso)"`
+	Activo            bool    `orm:"column(activo)"`
+	FechaCreacion     string  `orm:"column(fecha_creacion);type(timestamp without time zone)"`
+	FechaModificacion string  `orm:"column(fecha_modificacion);type(timestamp without time zone)"`
 }
 
-func (t *Respuesta) TableName() string {
-	return "respuesta"
+func (t *ProcesoParametro) TableName() string {
+	return "proceso_parametro"
 }
 
 func init() {
-	orm.RegisterModel(new(Respuesta))
+	orm.RegisterModel(new(ProcesoParametro))
 }
 
-// AddRespuesta insert a new Respuesta into database and returns
+// AddProcesoParametro insert a new ProcesoParametro into database and returns
 // last inserted Id on success.
-func AddRespuesta(m *Respuesta) (id int64, err error) {
+func AddProcesoParametro(m *ProcesoParametro) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetRespuestaById retrieves Respuesta by Id. Returns error if
+// GetProcesoParametroById retrieves ProcesoParametro by Id. Returns error if
 // Id doesn't exist
-func GetRespuestaById(id int) (v *Respuesta, err error) {
+func GetProcesoParametroById(id int) (v *ProcesoParametro, err error) {
 	o := orm.NewOrm()
-	v = &Respuesta{Id: id}
+	v = &ProcesoParametro{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllRespuesta retrieves all Respuesta matches certain condition. Returns empty list if
+// GetAllProcesoParametro retrieves all ProcesoParametro matches certain condition. Returns empty list if
 // no records exist
-func GetAllRespuesta(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllProcesoParametro(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(Respuesta))
+	qs := o.QueryTable(new(ProcesoParametro))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
 		k = strings.Replace(k, ".", "__", -1)
 		if strings.Contains(k, "isnull") {
 			qs = qs.Filter(k, (v == "true" || v == "1"))
-		} else if strings.HasSuffix(k, "__in") {
-			arr := strings.Split(v, "|")
-			qs = qs.Filter(k, arr)
 		} else {
 			qs = qs.Filter(k, v)
 		}
@@ -105,7 +102,7 @@ func GetAllRespuesta(query map[string]string, fields []string, sortby []string, 
 		}
 	}
 
-	var l []Respuesta
+	var l []ProcesoParametro
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -128,11 +125,11 @@ func GetAllRespuesta(query map[string]string, fields []string, sortby []string, 
 	return nil, err
 }
 
-// UpdateRespuesta updates Respuesta by Id and returns error if
+// UpdateProcesoParametro updates ProcesoParametro by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateRespuestaById(m *Respuesta) (err error) {
+func UpdateProcesoParametroById(m *ProcesoParametro) (err error) {
 	o := orm.NewOrm()
-	v := Respuesta{Id: m.Id}
+	v := ProcesoParametro{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -143,41 +140,17 @@ func UpdateRespuestaById(m *Respuesta) (err error) {
 	return
 }
 
-// DeleteRespuesta deletes Respuesta by Id and returns error if
+// DeleteProcesoParametro deletes ProcesoParametro by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteRespuesta(id int) (err error) {
+func DeleteProcesoParametro(id int) (err error) {
 	o := orm.NewOrm()
-	v := Respuesta{Id: id}
+	v := ProcesoParametro{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Respuesta{Id: id}); err == nil {
+		if num, err = o.Delete(&ProcesoParametro{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
 	return
-}
-
-func GetDocumentUUIDs(periodoID int, evaluadoID string) ([]string, error) {
-	o := orm.NewOrm()
-	uuidRegex := "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$"
-	sql := `
-    SELECT r.metadata::json ->> 'valor' AS document_uuid
-      FROM formulario f
-      LEFT JOIN formulario_plantilla_respuesta fpr ON f.id = fpr.formulario_id
-      LEFT JOIN respuesta r                       ON r.id = fpr.respuesta_id
-     WHERE f.periodo_id = $1
-       AND f.evaluado_id = $2
-       AND (r.metadata::json ->> 'valor') ~ $3
-    `
-	var rows []documentUUID
-	_, err := o.Raw(sql, periodoID, evaluadoID, uuidRegex).QueryRows(&rows)
-	if err != nil {
-		return nil, err
-	}
-	uuids := make([]string, len(rows))
-	for i, r := range rows {
-		uuids[i] = r.DocumentUUID
-	}
-	return uuids, nil
 }
