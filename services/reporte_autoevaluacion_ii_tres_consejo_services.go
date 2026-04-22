@@ -8,7 +8,7 @@ import (
 )
 
 func GetReporteAutoevaluacionIITresConsejo(evaluadorId string, periodoId int, procesoId int) ([]models.ReporteAutoevaluacionIITresConsejo, error) {
-//func GetReporteAutoevaluacionIITresConsejo(evaluadorId string, periodoId int, procesoId int) ([]models.ReporteAutoevaluacionIITresConsejo, error) {
+	//func GetReporteAutoevaluacionIITresConsejo(evaluadorId string, periodoId int, procesoId int) ([]models.ReporteAutoevaluacionIITresConsejo, error) {
 	o := orm.NewOrm()
 	var resultados []models.ReporteAutoevaluacionIITresConsejo
 
